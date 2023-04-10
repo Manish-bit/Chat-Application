@@ -3,6 +3,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const userRoutes = require("./routes/userRoutes");
+const messageRoutes = require("./routes/messagesRoutes");
 
 dotenv.config();
 
@@ -27,3 +28,4 @@ app.listen(process.env.PORT, () => {
 });
 
 app.use("/api/auth", userRoutes);
+app.use("/api/messages", messageRoutes);
