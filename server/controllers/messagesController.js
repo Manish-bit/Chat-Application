@@ -1,4 +1,5 @@
 const messageModel = require("../models/messageModel");
+const bcrypt = require("bcrypt");
 
 module.exports.addMsg = async (req, res, next) => {
   try {
@@ -17,4 +18,25 @@ module.exports.addMsg = async (req, res, next) => {
     next(error);
   }
 };
-module.exports.getAllMsg = async (req, res, next) => {};
+module.exports.getAllMsg = async (req, res, next) => {
+  try {
+    const { from, to } = req.body;
+    const messages = await messageModel
+      .find({
+        users: {
+          $all: [from, to],
+        },
+      })
+      .sort({ updatedAt: 1 });
+    const projectedMessages = messages.map((msg) => {
+      return {
+        fromSelf: msg.sender.toString() === from,
+        message: msg.message.text,
+      };
+    });
+    console.log(projectedMessages);
+    res.json(projectedMessages);
+  } catch (error) {
+    next(error);
+  }
+};

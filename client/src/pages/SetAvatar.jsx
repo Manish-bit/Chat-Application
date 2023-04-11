@@ -14,7 +14,6 @@ const SetAvatar = () => {
   //   const randomName = Math.random().toString(36).substring(7);
   //   setName(randomName);
   // }, []);
-
   const svgCode = multiavatar(name);
   const svgDataUrl = "data:image/svg+xml;base64," + btoa(svgCode);
   const api = "https://api.multiavatar.com/08978786";
